@@ -9,15 +9,20 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
-    },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    title: `Tech notes of hands-on software architects`,
+    authors: [{
+      name: `Maciej Laskowski`,
+      summary: `a hands-on software architect who believes that production-readiness and simplicity are the most significant qualities of applications.`,
+      image: `${__dirname}/src/images/tmichalak.jpeg`
+    },{
+      name: `Tomasz Michalak`,
+      summary: `a hands-on software architect interested in TDD and DDD who translates engineering complexity into the language of trade-offs and goals.`,
+      image: `../images/tmichalak.jpeg`
+    }],
+    description: `Technical notes of software architects based on their daily work`,
+    siteUrl: `https://handsonarchitects.com/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `tomichalak`,
     },
   },
   plugins: [

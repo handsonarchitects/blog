@@ -14,9 +14,10 @@ const Bio = () => {
     query BioQuery {
       site {
         siteMetadata {
-          author {
+          authors {
             name
             summary
+            image
           }
           social {
             twitter
@@ -27,30 +28,47 @@ const Bio = () => {
   `)
 
   // Set these values by editing "siteMetadata" in gatsby-config.js
-  const author = data.site.siteMetadata?.author
+  const authors = data.site.siteMetadata?.authors
   const social = data.site.siteMetadata?.social
 
+
   return (
-    <div className="bio">
-      <StaticImage
-        className="bio-avatar"
-        layout="fixed"
-        formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.png"
-        width={50}
-        height={50}
-        quality={95}
-        alt="Profile picture"
-      />
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
-      )}
+    <div>
+      <h2>About the authors</h2>
+      <div className="bio-container">
+      {authors.map(author => {
+        var image = author?.name === "Tomasz Michalak" ?
+          <StaticImage
+            className="bio-avatar"
+            layout="fixed"
+            formats={["auto", "webp", "avif"]}
+            src="../images/tmichalak.jpg"
+            width={50}
+            height={50}
+            quality={95}
+            alt="Profile picture"
+          /> : <StaticImage
+           className="bio-avatar"
+           layout="fixed"
+           formats={["auto", "webp", "avif"]}
+           src="../images/mlaskowski.jpg"
+           width={50}
+           height={50}
+           quality={95}
+           alt="Profile picture"
+         />
+        return (
+          <div className="bio">
+            {image}
+            {author?.name && (
+              <p>
+                Written by <strong>{author.name}</strong> - {author?.summary || null}
+              </p>
+            )}
+          </div>
+        )
+      })}
+      </div>
     </div>
   )
 }
