@@ -12,8 +12,8 @@ module.exports = {
     title: `Tech notes of hands-on software architects`,
     authors: [{
       name: `Maciej Laskowski`,
-      summary: `a hands-on software architect who believes that production-readiness and simplicity are the most significant qualities of applications.`,
-      image: `${__dirname}/src/images/tmichalak.jpeg`
+      summary: `software architect with deep hands-on experience. Continuous Delivery evangelist, architecture trade offs analyst, cloud-native solutions enthusiast.`,
+      image: `${__dirname}/src/images/mlaskowski.jpg`
     },{
       name: `Tomasz Michalak`,
       summary: `a hands-on software architect interested in TDD and DDD who translates engineering complexity into the language of trade-offs and goals.`,
@@ -22,7 +22,7 @@ module.exports = {
     description: `Technical notes of software architects based on their daily work`,
     siteUrl: `https://handsonarchitects.com/`,
     social: {
-      twitter: `tomichalak`,
+      twitter: `${__dirname}/src/images/tmichalak.jpg`,
     },
   },
   plugins: [
