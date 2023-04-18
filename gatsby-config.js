@@ -132,5 +132,24 @@ module.exports = {
     {
       resolve: `gatsby-plugin-robots-txt`,
     },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+      
+        trackingIds: [
+          "G-GE9DCXMY6B",
+        ],
+        gtagConfig: {
+          optimize_id: "OPT_CONTAINER_ID",
+          anonymize_ip: true,
+          cookie_expires: 0,
+        },
+        pluginConfig: {
+          head: false,
+          respectDNT: true,
+          exclude: ["/preview/**"]
+        },
+      },
+    },
   ],
 }
