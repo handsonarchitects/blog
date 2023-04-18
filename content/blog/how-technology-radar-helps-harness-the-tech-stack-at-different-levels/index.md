@@ -41,9 +41,9 @@ However, there are some common qualities, the radar helps to understand no matte
    - on the personal radar (one that helps to organize what you know and what you want to learn) it may point to what we want to learn next,
    - on the company radar, we may seek information on what conferences/workshops we should send employees to,
 - `confidence` - how much do we trust (but also know) the tech, e.g.:
-   - the project's radar shows that one technology is the default choice for some kind of platform services (e.g. we choose `Quarkus` over `Spring` to backend services),
+   - the project's radar shows that one technology is the default choice for some kind of platform services (e.g. we choose `Quarkus` over `Spring` when implementing backend services),
    - on the personal radar, placing the blip may represent our seniority in the technology or technique (e.g. we are just getting to know `Apache Kafka`, but we could lead the training in the middle of the night on adopting `Continous Integration`),
-- `trends` (or `adoption`) - how widely adopted is the technology, how much did we invest in it already, is it gaining or loosing popularity, e.g.:
+- `trends` (or `adoption`) - how widely adopted is the technology, how much did we invest in it already, is it gaining or losing popularity, e.g.:
    - the digital experience industry radar may show an increasing trend in measuring their applications footprint (e.g. clients ask more and more about the "Green Cloud"),
    - the personal radar may represent the technology we know well, but we don't want to invest in/work with anymore (e.g. we are experts in `Maven`, but it let us down so many times, that we will start new projects only using `Gradle`).
 
