@@ -2,7 +2,7 @@
 title: How Technology Radar helps harness the tech stack at different levels
 date: "2023-04-17"
 description: Technology Radar is a phenomenon that helps visualize the technology stack. Let's dive into how the tool may help to harness the tech stack at various levels of business.
-featuredImage: 
+featuredImage: ./radar.png
 ---
 
 ![empty-technology-radar](radar.png)

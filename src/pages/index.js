@@ -63,12 +63,15 @@ const BlogIndex = ({ data, location }) => {
 
 export default BlogIndex
 
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
-export const Head = () => <Seo title="All posts" />
+export const Head = ({ data }) => {
+  return (
+    <Seo
+      title={data.site.siteMetadata?.title}
+      description={data.site.siteMetadata?.description}
+      image='/icons/icon-512x512.png'
+    />
+  )
+}
 
 export const pageQuery = graphql`
   {

@@ -21,9 +21,6 @@ module.exports = {
     }],
     description: `Technical notes of software architects based on their daily work`,
     siteUrl: `https://handsonarchitects.com/`,
-    social: {
-      twitter: `${__dirname}/src/images/tmichalak.jpg`,
-    },
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -107,7 +104,7 @@ module.exports = {
               }
             }`,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "Hands-on architects Blog RSS Feed",
           },
         ],
       },
@@ -117,6 +114,7 @@ module.exports = {
       options: {
         name: `Tech notes of hands-on software architects`,
         short_name: `hands-on architects blog`,
+        lang: `en`,
         start_url: `/`,
         background_color: `#ffffff`,
         // This will impact how browsers show your PWA/website

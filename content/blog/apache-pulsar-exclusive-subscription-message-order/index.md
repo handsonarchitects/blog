@@ -2,7 +2,7 @@
 title: Exclusive subscription messages order with Apache Pulsar 
 date: "2023-03-12T22:40:32.169Z"
 description: This article describes the differences in message order when the recipient/consumer confirms or rejects messages subscribed to with an exclusive subscription.
-featuredImage: ../blog/apache-pulsar-exclusive-subscription-message-order/exclusive-subscription-acknowledge-final.png
+featuredImage: ./exclusive-subscription-acknowledge-final.png
 ---
 # Pulsar message order
 

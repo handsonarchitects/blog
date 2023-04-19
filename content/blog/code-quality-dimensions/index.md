@@ -2,7 +2,7 @@
 title: Code quality dimensions
 date: "2023-04-13T22:40:32.169Z"
 description: Recently, we were discussing a post from Kent Beck on Code Reviews. Here are our thoughts.
-featuredImage: 
+featuredImage: ./ship-show-ask.png
 ---
 
 The aforementioned post [Thinking About Code Review](https://tidyfirst.substack.com/p/thinking-about-code-review) was triggered by one of the Twitter threads on CI/CD vs PRs.

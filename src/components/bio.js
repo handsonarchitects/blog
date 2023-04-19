@@ -46,7 +46,7 @@ const Bio = () => {
             width={50}
             height={50}
             quality={95}
-            alt="Profile picture"
+            alt="Tomasz Michalak"
           /> : <StaticImage
            className="bio-avatar"
            layout="fixed"
@@ -55,10 +55,10 @@ const Bio = () => {
            width={50}
            height={50}
            quality={95}
-           alt="Profile picture"
+           alt="Maciej Laskowski"
          />
         return (
-          <div className="bio">
+          <div className="bio" key={author?.name}>
             {image}
             {author?.name && (
               <p>
