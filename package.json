@@ -20,6 +20,7 @@
     "gatsby-plugin-sitemap": "^6.9.0",
     "gatsby-remark-images": "^7.4.0",
     "gatsby-remark-prismjs": "^7.4.0",
+    "gatsby-remark-reading-time": "^1.1.0",
     "gatsby-remark-responsive-iframe": "^6.4.0",
     "gatsby-source-filesystem": "^5.4.0",
     "gatsby-transformer-remark": "^6.4.0",
