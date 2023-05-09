@@ -91,4 +91,4 @@ The consumer receives message "A" with some delay (second attempt). We can make 
 Apache Pulsar delivers messages in sequential order as long as the consumer positively acknowledges them. The message acknowledgment mechanism allows consumers to ask Pulsar to redeliver the message. The consequence is that our processing logic cannot rely on the order of the messages. When the order of messages is critical (publish/unpublish), our algorithm needs to use additional strategies, e.g. event time / sequence id, to properly handle this situation.
 
 ## References
-- [MessagesOrderScenariosTest](https://github.com/handsonarchitects/sandbox/blob/main/pulsar/src/test/java/com/handsonarchitects/pulsar/MessagesOrderScenariosTest.java)
+- [Unit tests](https://github.com/handsonarchitects/sandbox/blob/main/pulsar/src/test/java/com/handsonarchitects/pulsar/ExclusiveSubscriptionMessageOrderTest.java)
