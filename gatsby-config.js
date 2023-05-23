@@ -13,11 +13,21 @@ module.exports = {
     authors: [{
       name: `Maciej Laskowski`,
       summary: `software architect with deep hands-on experience. Continuous Delivery evangelist, architecture trade offs analyst, cloud-native solutions enthusiast.`,
-      image: `${__dirname}/src/images/mlaskowski.jpg`
+      image: `${__dirname}/src/images/mlaskowski.jpg`,
+      social: {
+        twitter: 'ma_laskowski',
+        linkedin: 'maciej-laskowski',
+        github: 'malaskowski'
+      }
     },{
       name: `Tomasz Michalak`,
       summary: `a hands-on software architect interested in TDD and DDD who translates engineering complexity into the language of trade-offs and goals.`,
-      image: `../images/tmichalak.jpeg`
+      image: `../images/tmichalak.jpeg`,
+      social: {
+        twitter: 'tomichalak',
+        linkedin: 'tomaszmichalak',
+        github: 'tomaszmichalak'
+      }
     }],
     description: `Technical notes of software architects based on their daily work`,
     siteUrl: `https://handsonarchitects.com/`,

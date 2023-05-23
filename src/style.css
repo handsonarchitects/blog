@@ -298,6 +298,10 @@ a:focus {
   margin-bottom: var(--spacing-0);
 }
 
+.bio a {
+  margin-right: 10px;
+}
+
 .bio-avatar {
   margin-right: var(--spacing-4);
   margin-bottom: var(--spacing-0);
