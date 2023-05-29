@@ -48,7 +48,7 @@ Consumed: 190:0:-1:0 value: 1
 
 Our hypothesis formed based on Pulsar documentation seemed wrong. We immediately remembered the Richard Feynman words:
 
-> If your guess disagrees with experiment, the it (your guess) is wrong!
+> If your guess disagrees with experiment, then it (your guess) is wrong!
 
 
 We spent more time experimenting with our failing test. We quickly discovered that the Pulsar client has a prefetch mechanism that downloads events from the topic in larger batches. By default, the client downloads `1000` messages at a time, and each time `receive()` is called, we get a message previously downloaded from the topic. Although after compacting the topic, the messages may already be "stale". 
