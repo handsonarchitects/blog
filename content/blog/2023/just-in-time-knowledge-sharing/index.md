@@ -31,7 +31,8 @@ Now, we would like to share a couple of recommendations for a quick start for th
 ## Quick-start - presenters
 
 - Time is of the essence. Don't wait for a special moment. Just give it a try. You don't need to prepare much. Talk about what you are currently doing in your project.
-- Start small, e.g., just in your team. When you are ready, try your department or company meetings.
+   - Depending on the talk type, we prepare between 5-60 min. If this is a live coding session, 5 minutes is enough to have an agenda for things you want to show (it is usually good to have a note on the side to keep in timing). With ideas or summaries, when some graphics are required, we spend a bit more time (but never more than 1h).
+- Start small, e.g., just in your team. When you are ready, try your department or company meetings. A good time would be a 15-20 min slot right after your daily. Demo a solution you were working at to your team.
 - Make it natural and bring the tools you are used to work with. Do not spend much time on preparations. Treat this meeting as you would if you were to introduce your colleague to the project.
 - Don't bring PowerPoint presentations (we even forbid it at the beginning to distinguish this session from other more formal meetings).
 - Instead, prepare your IDE (make sure font will be visible to others), notes (e.g., in Markdown format), or some whiteboard tool (Miro works quite well).
@@ -51,7 +52,7 @@ Now, we would like to share a couple of recommendations for a quick start for th
 - Generally, one slot = one talk. Do not stack. Many JITs end up with a discussion (the prize for the presenter - they get questions and feedback there).
 - If you have other, more formal knowledge-sharing sessions, do not let PowerPoint presentations. Simple drawings, an IDE, a console, and a whiteboard are all what presenters need.
 - Recordings - this is a tricky one. As far as we observed, it is a controversial area. On the one hand, recording allows people who were unable to attend the meeting to watch the recording at any time and ask questions. On the other hand, we have observed that the recording function prevents many people from asking questions and participating in the discussion.
-- Generally, we do not recommend imposing the form of the meeting. Let the presenters decide which format they feel most comfortable with. A good balance could be recording sessions and taking questions/feedback after recording has stopped.
+- Generally, we do not recommend imposing the form of the meeting. Let the presenters decide which format they feel most comfortable with. A good balance could be recording sessions and taking questions/feedback after recording has stopped. Another way is to leave notes and key takeaways in some common source like Confluence or GitHub repo README.
 - Do not kid yourself. This format, like many others, must have several precursors to be successful. Help them organise meetings and encourage people to participate. If it succeeds, it will be like a good YT video - it will start getting thumbs-up on its own.
 
 ## TL;DR
