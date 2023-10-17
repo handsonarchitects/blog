@@ -27,7 +27,7 @@ For example, in the Adobe Experience Manager (AEM), the caching happens on the D
 
 ## Sample solutions
 
-To make things more clear, let's work with some examples. We will use a simple Product Details Page reference. The solution involves the CMS, which is the source of content and layouts of pages. Product Information Management (PIM) system is the source of product data presented on the product pages.
+To make things more clear, let's work with some example. We will use a simple Product Details Page reference. The solution involves the CMS, which is the source of content and layouts of pages. Product Information Management (PIM) system is the source of product data presented on the product pages.
 
 Below, you can find three examples of content-centric architectures that enable displaying product data on the Product Details Page.
 
