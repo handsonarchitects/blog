@@ -25,6 +25,8 @@ For example, in the Adobe Experience Manager (AEM), the caching happens on the D
 
 ![AEM caching](aem-caching.png)
 
+Invalidation rules for Dispatcher caching can be challenging. They depend on complex content relations such as PDP pages, listing pages, and `.stat` files. For more information, you can refer to the [Dispatcher configuration guide](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html?lang=en).
+
 ## Sample solutions
 
 To make things more clear, let's work with some example. We will use a simple Product Details Page reference. The solution involves the CMS, which is the source of content and layouts of pages. Product Information Management (PIM) system is the source of product data presented on the product pages.
