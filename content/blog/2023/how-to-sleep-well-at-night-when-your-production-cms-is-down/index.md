@@ -22,3 +22,8 @@ And the session will not end with just talking.
 Make sure to join us on **Monday, 25th September 2023 at 17:35 CEST**.
 
 Maciej
+
+### Recording
+> Edit: You can watch the recording here: 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uqwmu_kMHcQ?si=cIg7qICF8zE8c6R8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
