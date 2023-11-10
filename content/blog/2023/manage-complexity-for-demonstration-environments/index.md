@@ -30,3 +30,5 @@ As we mentioned at the beginning, this setup is not free of tradeoffs. Here are 
 As you can see, the list of tradeoffs is not a short one. This is the cost of making things simpler and reducing cognitive load required to attend potential partners and customers for more advanced products. Enabling engineering teams with various skill sets to explore or do a quick proof of concept is a key factor, which makes these tradeoffs acceptable in a given context.
 
 This concludes our demo/prod environments parity discussion. The twelve-factor app principles are the foundation for building web applications. However, they are not the golden rules, and as always, everything depends on the context. 
+
+Check [websight.io](https://www.websight.io/) blogpost [“Introducing a streamlined approach to showcase WebSight CMS using GCP Cloud Run!“](https://www.websight.io/blog/2023/gcp-cloud-run.html) to see a practical example of demo environments simplification.
