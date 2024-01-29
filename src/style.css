@@ -284,6 +284,14 @@ a:focus {
   font-size: var(--fontSize-2);
 }
 
+.header-link-contact {
+  font-weight: var(--fontWeight-bold);
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: var(--fontSize-2);
+  margin-left: 25px;
+}
+
 .bio {
   display: flex;
   margin-bottom: var(--spacing-16);
