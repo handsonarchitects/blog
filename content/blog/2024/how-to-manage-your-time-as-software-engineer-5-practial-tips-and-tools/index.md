@@ -9,14 +9,14 @@ featuredImage: ./software-engineer-manages-time.png
 
 In this post, we will share 5 practical tips and tools that help us manage time and keep our productivity high. 
 
-> Spoiler alert: there will be no breakthroughs and no silver bullets in this post. You probably know or at least heard about most of the techniques and tools we will describe. What we want to do through this post is to add a software engineering perspective to the time management topic. We will also share some of the tools that we use to manage our time.
+> Spoiler alert: there will be no breakthroughs and no silver bullets in this post. You probably know or at least heard of the techniques and tools we will describe. In this post, we want to add a software engineering perspective to the time management topic  and share some of the tools we use to manage our time.
 
 ## 1. Deep focus and Pomodoro techniques
 Working as a software engineer taught us that there is no silver bullet when it comes to productivity. Some days, you have many small tasks you need to complete, and some days, you have a single big task you need to focus on.
 
 Depending on the type of our daily plan, we use different techniques and tools to help us stay focused and productive.
 
-When we have many small tasks that we need to complete (e.g., writing documentation, reviewing pull requests, red-green-refactor coding of already designed applications, or writing an architecture decision record), we use the `Pomodoro` technique. This technique uses a timer to break down work into intervals, traditionally 25 minutes in length (however, depending on the type of tasks, we make it up to 55 min per task in a row), separated by short breaks. It is a great way to stay focused and get many small things done. Pomodoro also does a great job for pair programming sessions.
+When we have many small tasks that we need to complete (e.g., writing documentation, reviewing pull requests, red-green-refactor coding of already designed applications, or writing an architecture decision record), we use the `Pomodoro` technique. This technique uses a timer to break down work into intervals, traditionally 25 minutes in length (however, depending on the type of tasks, we make it up to 55 min per task in a row), separated by short breaks. It is a great way to stay focused and get many small things done. Pomodoro also supports pair programming sessions, helping us switch between driver and navigator roles at set intervals.
 
 However, the Pomodoro technique is not the best way to get into the flow state (e.g., designing/coding a more demanding module, reverse engineering a system that needs refactoring, writing a blog post, preparing a presentation). These activities require "loading everything to your cache" to understand or present the problem. In these cases, we try to get into a `deep focus`, which is nothing else than giving all your brain power to a single but very complex task for a longer period. There is no rule on how long the deep focus session should last. It depends on the task, the person, the mood, and many other factors. However, there are two rules that we always try to follow: **limit distractions** and **take breaks**.
 
@@ -41,7 +41,7 @@ We know it might sound cliché, but we tried both approaches with or without reg
 
 During the Pomodoro we usually take a break after every session. We use this time to stand up, stretch, change the desk's position (from sitting to standing or back), drink coffee, and talk to our teammates. This way we get back to the next session with a fresh mind, ready to switch context and start working on a new task.
 
-During the deep focus sessions, breaks are less frequent but even more important. We noticed that taking breaks that change the environment (e.g., going for a walk) helps us to get back to the task with a fresh mind, new ideas, and most often new perspective on the problem at hand (but this is a material for a separate blog post). Also, don't forget to have a glass of water on your desk. We know that might sound simple, but we noticed that staying hydrated helps us stay focused and productive for a longer time.
+During the deep focus sessions, breaks are less frequent but even more important (unless we want to end our working day as a walking zombie). We noticed that taking breaks that change the environment (e.g., going for a walk) helps us to get back to the task with a fresh mind, new ideas, and most often new perspective on the problem at hand (but this is a material for a separate blog post). Also, don't forget to have a glass of water on your desk. We know that might sound simple, but we noticed that staying hydrated helps us stay focused and productive for a longer time.
 
 **Tooling**
 - A simple timer will do the job.
