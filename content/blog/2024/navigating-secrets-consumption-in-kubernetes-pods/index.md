@@ -1,7 +1,7 @@
 ---
 title: Navigating Secrets Consumption in Kubernetes Pods
-date: "2024-02-10"
-description: In the intricate world of Kubernetes, the management and utilization of secrets within pods and containers demand careful consideration. With various options available, each presenting distinct behaviors to cater to specific needs, it's imperative to comprehend their nuances. In this article, we delve into each option, shedding light on how pods and containers are impacted across different scenarios.
+date: "2024-02-13"
+description: In the intricate world of Kubernetes, the management and utilization of secrets within pods and containers demand careful consideration. In this article, we delve into available options, shedding light on how pods and containers are impacted across different scenarios.
 featuredImage: ./secrets-in-kubernetes.png
 ---
 
@@ -20,7 +20,7 @@ The following paragraphs will explore the various secret consumption options in 
 
 ## Secret as Volume
 
-We begin our exploration with the secret as a volume, a method that mounts the secret as a file within the pod's filesystem. This approach is particularly useful when your application requires access to the secret as a file, such as when reading a certificate or key file.
+We begin our exploration with the secret as a volume, a method that mounts the secret data entries as files within the pod's filesystem. This approach is particularly useful when your application requires access to the secret as a file, such as when reading a certificate or key file.
 
 To illustrate the behavior of a pod with a secret mounted as a volume, consider the following scenario:
 
@@ -64,7 +64,7 @@ kubectl create secret generic keys-secret --from-file=key.pem --from-file=key.pu
 ```
 4. Check the status of the pod.
 ```bash
-kubectl get pods | grep pod-with-secret-as-volume
+kubectl get pod pod-with-secret-as-volume
 kubectl -it exec pod-with-secret-as-volume -- ls -al /etc/keys
 kubectl -it exec pod-with-secret-as-volume -- env | grep KEY
 ```
@@ -101,8 +101,9 @@ The mounted files are still present in the pod.
 
 When to Use Secret as Volume:
 - when your application requires access to the secret as a file
-- when we want to mount all the keys from the secret as files
-- when the new files should be automatically available in the containers when the new application version (the new image tag is configured) is deployed (POD is recreated automatically) - when container is aware of the secret's files paths
+- when you want to mount all the keys from the secret as files
+- when the new files should be automatically available in the containers after the new version of an application is deployed (POD is recreated automatically) 
+- when the pod's container is aware of the secret's files paths
 
 ## Secret as Environment Variables (envFrom)
 
@@ -136,7 +137,7 @@ kubectl create secret generic db-secret --from-literal=DB_ADMIN=myadmin --from-l
 ```
 4. Check the pod's details.
 ```bash
-kubectl get pods | grep pod-with-secret-env-from
+kubectl get pod pod-with-secret-env-from
 kubectl describe pod pod-with-secret-env-from | grep -A 2 "Environment"
 kubectl exec -it pod-with-secret-env-from  -- env | grep DB_
 ```
@@ -209,7 +210,7 @@ spec:
     - image: nginx
       name: pod-with-secret-env-secret-key-ref
       env:
-      - name: DB_PASSWORD
+      - name: APP_PREFIX_DB_PASS
         valueFrom:
           secretKeyRef:
             name: db-secret
@@ -217,7 +218,7 @@ spec:
 ```
 2. Check the status of the pod.
 ```bash
-kubectl get pods | grep pod-with-secret-env-secret-key-ref
+kubectl get pod pod-with-secret-env-secret-key-ref
 ```
 The pod will not be created until the secret is present.
 
@@ -227,26 +228,26 @@ kubectl create secret generic db-secret --from-literal=DB_ADMIN=myadmin --from-l
 ```
 4. Check the status of the pod.
 ```bash
-kubectl get pods | grep pod-with-secret-env-secret-key-ref
-kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep DB_
+kubectl get pod pod-with-secret-env-secret-key-ref
+kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep APP_PREFIX_
 ```
 The expected result is:
 ```bash
 pod-with-secret-env-secret-key-ref   1/1     Running...
 ...
-DB_PASSWORD=mypass
+APP_PREFIX_DB_PASS=mypass
 ```
 5. Delete the secret and observe the behavior of the pod.
 ```bash
 kubectl delete secret db-secret
-kubectl get pods | grep pod-with-secret-env-secret-key-ref
-kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep DB_
+kubectl get pod pod-with-secret-env-secret-key-ref
+kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep APP_PREFIX
 ```
 The expected result is:
 ```bash
 pod-with-secret-env-secret-key-ref   1/1     Running...
 ...
-DB_PASSWORD=mypass
+APP_PREFIX_DB_PASS=mypass
 ```
 6. Recreate the secret with a new database password.
 ```bash
@@ -254,24 +255,25 @@ kubectl create secret generic db-secret --from-literal=DB_ADMIN=myadmin --from-l
 ```
 7. View the environment variables in the pod.
 ```bash
-kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep DB_
+kubectl exec -it pod-with-secret-env-secret-key-ref  -- env | grep APP_PREFIX
 ```
 The result should be:
 ```bash
-DB_PASSWORD=mypass
+APP_PREFIX_DB_PASS=mypass
 ```
 As observed in this scenario, the pod is not affected if the secret is deleted. Container environment variables are not updated when the secret is recreated.
 
 When to Use Secret as Environment Variables (secretKeyRef):
+- when the secret's data key is different than the one required by the application
 - when your application requires access to specific keys from the secret as environment variables (more control over the keys, more secure)
 - when the pod should not be created if the specific key is not present in the secret during the pod's creation
 
-The difference between the `envFrom` and `secretKeyRef` methods is that the `envFrom` method loads all the key-value pairs from the secret as environment variables, while the `secretKeyRef` method allows you to specify the keys from the secret that should be injected as environment variables. **If the key is not present in the secret, the pod will not be created (during pod creation time).**
+The difference between the `envFrom` and `secretKeyRef` methods is that the `envFrom` method loads all the key-value pairs from the secret as environment variables, while the `secretKeyRef` method allows you to specify the keys from the secret that should be injected as environment variables. With the default settings, **if the key is not present in the secret, the pod will not be created (during pod creation time).**
 
 ## Summary
 
 The consumption of secrets in Kubernetes pods and containers in all scenarios above follows similar behavior patterns.
-- the pod is not created until the secret is present
+- by default, the pod is not created until the secret is present
 - the pod keeps the secret's data even if the secret is deleted
 - the pod is not restarted when the secret is deleted
 
