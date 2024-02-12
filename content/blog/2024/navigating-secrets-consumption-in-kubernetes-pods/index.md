@@ -281,4 +281,5 @@ The key differences among the secret consumption options are:
 - the method of accessing the secret's data (as files or environment variables)
 - the level of control over the secret's keys
 
-In conclusion, the choice of secret consumption method depends on the specific requirements of your application. Understanding the behavior of each method is crucial for ensuring the optimal functionality and resilience of your Kubernetes environment, especially when using Helm charts to manage your deployments that can dynamically update the secrets and recreate the pods with new values.
+Summarizing, the secret as a volume is suitable when your application requires access to the secret as a file, while the secret as environment variables (envFrom and secretKeyRef) is suitable when your application requires access to the secret as environment variables. The `envFrom` method loads all the key-value pairs from the secret as environment variables, while the `secretKeyRef` method allows you to specify the keys from the secret that should be injected as environment variables.
+
