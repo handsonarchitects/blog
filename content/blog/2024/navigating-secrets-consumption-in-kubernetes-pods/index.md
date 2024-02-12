@@ -52,7 +52,7 @@ spec:
 ```
 2. Check the status of the pod.
 ```bash
-kubectl get pods | grep pod-with-secret-as-volume
+kubectl get pod pod-with-secret-as-volume
 ```
 The pod will not be created until the secret is present.
 
@@ -81,7 +81,7 @@ PUBLIC_KEY=/etc/keys/key.pub
 5. Delete the secret and observe the behavior of the pod.
 ```bash
 kubectl delete secret keys-secret
-kubectl get pods | grep pod-with-secret-as-volume
+kubectl get pod pod-with-secret-as-volume
 kubectl -it exec pod-with-secret-as-volume -- env | grep KEY
 ```
 The expected result is:
@@ -127,7 +127,7 @@ spec:
 ```
 2. Check the status of the pod.
 ```bash
-kubectl get pods | grep pod-with-secret-env-from
+kubectl get pod pod-with-secret-env-from
 ```
 The pod will not be created until the secret is present.
 
@@ -157,7 +157,7 @@ DB_PASSWORD=mypass
 5. Delete the secret and observe the behavior of the pod.
 ```bash
 kubectl delete secret db-secret
-kubectl get pods | grep pod-with-secret-env-from
+kubectl get pod pod-with-secret-env-from
 kubectl exec -it pod-with-secret-env-from  -- env | grep DB_
 ```
 The result should be:
