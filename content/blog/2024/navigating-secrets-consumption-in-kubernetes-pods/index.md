@@ -9,7 +9,7 @@ featuredImage: ./secrets-in-kubernetes.png
 
 Kubernetes offers several avenues for consuming secrets within pods and containers, each tailored to accommodate diverse requirements. Understanding the distinctive characteristics of each option is vital for ensuring optimal functionality and resilience in your Kubernetes environment.
 
-One crucial aspect to ponder is the adaptability of secrets to potential changes. Whether your secrets might undergo alterations, expand with new values (keys), or even vanish unexpectedly, it's imperative to evaluate how these transformations could affect your pods. This is particularly crucial when apply such mechanisms as Helm charts, which can dynamicaaly calculate secrets' hashes and update the pods with new values. Then pods should be restarted automatically to apply the new values.
+One crucial aspect to ponder is the adaptability of secrets to potential changes. Whether your secrets might undergo alterations, expand with new values (keys), or even vanish unexpectedly, it's imperative to evaluate how these transformations could affect your pods. This is particularly crucial when apply such mechanisms as Helm charts, which can dynamicaaly calculate secrets' hashes and update the pods with new values. Then pods should be recreated automatically to apply the new values.
 
 The following paragraphs will explore the various secret consumption options in Kubernetes. All scenarios below are tested on a Kubernetes cluster running version `1.29.1`.
 
@@ -54,7 +54,9 @@ spec:
 ```bash
 kubectl get pod pod-with-secret-as-volume
 ```
-The pod will not be created until the secret is present.
+The pod won't be created until the secret is present. 
+
+> This can be altered using the `optional: true` option. If an optional Secret doesn't exist, Kubernetes ignores it. ([#restriction-secret-must-exist](https://kubernetes.io/docs/concepts/configuration/secret/#restriction-secret-must-exist))
 
 3. Create a secret with RSA keys
 ```bash
@@ -167,7 +169,7 @@ pod-with-secret-env-from   1/1     Running
 DB_ADMIN=myadmin
 DB_PASSWORD=mypass
 ```
-As observed in this scenario, the pod is not restarted when the secret is deleted and environment variables loaded during the pod's creation still persist.
+As observed in this scenario, the pod is not recreated when the secret is deleted and environment variables loaded during the pod's creation still persist.
 
 7. Recreate the secret with a new database password and a new key-value pair.
 ```bash
@@ -185,7 +187,7 @@ The result should be:
 DB_ADMIN=myadmin
 DB_PASSWORD=mypass
 ```
-Once the secret is created again and the pod is not restarted, then the environment variables are not refreshed.
+Once the secret is created again and the pod is not recreated, then the environment variables are not refreshed.
 
 When to Use Secret as Environment Variables (envFrom):
 - when your application requires access to the secret as environment variables
@@ -275,7 +277,7 @@ The difference between the `envFrom` and `secretKeyRef` methods is that the `env
 The consumption of secrets in Kubernetes pods and containers in all scenarios above follows similar behavior patterns.
 - by default, the pod is not created until the secret is present
 - the pod keeps the secret's data even if the secret is deleted
-- the pod is not restarted when the secret is deleted
+- the pod is not recreated when the secret is deleted
 
 The key differences among the secret consumption options are:
 - the method of accessing the secret's data (as files or environment variables)
