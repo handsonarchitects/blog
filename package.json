@@ -1,40 +1,36 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "hands-on-architects-blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "HandsOnArchitects blog",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
   "dependencies": {
-    "@fontsource/merriweather": "^4.5.14",
-    "@fontsource/montserrat": "^4.5.13",
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fontsource/merriweather": "^5.0.12",
+    "@fontsource-variable/montserrat": "^5.0.17",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "gatsby": "^5.4.2",
-    "gatsby-plugin-feed": "^5.4.0",
-    "gatsby-plugin-google-gtag": "^5.9.0",
-    "gatsby-plugin-image": "^3.4.0",
-    "gatsby-plugin-manifest": "^5.4.0",
+    "gatsby": "^5.13.3",
+    "gatsby-plugin-feed": "^5.13.1",
+    "gatsby-plugin-google-gtag": "^5.13.1",
+    "gatsby-plugin-image": "^3.13.1",
+    "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-robots-txt": "^1.8.0",
-    "gatsby-plugin-sharp": "^5.4.0",
-    "gatsby-plugin-sitemap": "^6.9.0",
-    "gatsby-remark-autolink-headers": "^6.12.1",
-    "gatsby-remark-images": "^7.4.0",
-    "gatsby-remark-prismjs": "^7.4.0",
+    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-plugin-sitemap": "^6.13.1",
+    "gatsby-remark-autolink-headers": "^6.13.1",
+    "gatsby-remark-images": "^7.13.1",
+    "gatsby-remark-prismjs": "^7.13.1",
+    "gatsby-remark-responsive-iframe": "^6.13.1",
     "gatsby-remark-reading-time": "^1.1.0",
-    "gatsby-remark-responsive-iframe": "^6.4.0",
-    "gatsby-source-filesystem": "^5.4.0",
-    "gatsby-transformer-remark": "^6.4.0",
-    "gatsby-transformer-sharp": "^5.4.0",
+    "gatsby-source-filesystem": "^5.13.1",
+    "gatsby-transformer-remark": "^6.13.1",
+    "gatsby-transformer-sharp": "^5.13.1",
     "prismjs": "^1.29.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.1"
+    "prettier": "^3.2.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
@@ -46,12 +42,12 @@
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
   },
   "scripts": {
-    "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "gatsby develop",
+    "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   }
 }
