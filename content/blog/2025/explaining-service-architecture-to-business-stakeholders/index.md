@@ -13,7 +13,7 @@ They asked: *Why should we move away from a system we have already seen in actio
 
 We needed an analogy that would make the differences between monolithic and service architectures clear, relatable, and memorable. So, when we were asked to present our reasoning to leadership, we came up with something that clicked immediately: comparing a large restaurant to a food truck festival.
 
-## Monolith vs. services: testaurant vs. food trucks
+## Monolith vs. services: restaurant vs. food trucks
 
 Think of two contrasting dining experiences. In one, you have a single large, busy restaurant with one centralized kitchen—this represents monolithic architecture. The restaurant is responsible for preparing everything: burgers, vegan dishes, desserts, and more. All the chefs share the same kitchen space, use the same equipment, and rely on a single team to serve all customers. At first glance, this setup seems efficient because everything operates under one roof. However, let’s dive deeper.
 
