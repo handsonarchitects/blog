@@ -334,6 +334,13 @@ a:focus {
   margin-bottom: var(--spacing-8);
 }
 
+/* Enable wrapping for code blocks */
+pre[class*="language-markdown"],
+code[class*="language-markdown"] {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+
 /* Media queries */
 
 @media (max-width: 42rem) {
