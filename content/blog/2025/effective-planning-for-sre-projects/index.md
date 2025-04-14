@@ -1,5 +1,5 @@
 ---
-title: Effective Planning for Site Reliability Engineering (SRE) Projects
+title: Effective planning for Site Reliability Engineering (SRE) projects
 date: "2025-04-14"
 description: This blog post provides a comprehensive guide to effective planning for Site Reliability Engineering (SRE) projects, balancing long-term initiatives with operational responsibilities. However, the principles and practices discussed here are not limited to SRE. They can be applied to any software engineering project, making them relevant for a wide range of teams and organizations.
 featuredImage: ./sre-planning-hero.png
