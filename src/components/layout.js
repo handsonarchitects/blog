@@ -6,12 +6,66 @@ const Layout = ({ location, title, children }) => {
   const isRootPath = location.pathname === rootPath
   let header
 
+  const [showDropdown, setShowDropdown] = React.useState(false)
+
+  const handleDropdown = () => setShowDropdown(!showDropdown)
+  const closeDropdown = () => setShowDropdown(false)
+
   if (isRootPath) {
     header = (
       <>
         <Link className="header-link-home" to="/">
           Home
         </Link>
+        <div
+          className="header-link-dropdown"
+          onMouseEnter={handleDropdown}
+          onMouseLeave={closeDropdown}
+          style={{ display: "inline-block", position: "relative" }}
+        >
+          <button
+            className="header-link-projects"
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+            aria-haspopup="true"
+            aria-expanded={showDropdown}
+          >
+            Open-source ▼
+          </button>
+          {showDropdown && (
+            <div
+              className="dropdown-menu"
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                background: "#fff",
+                border: "1px solid #ccc",
+                zIndex: 1000,
+                minWidth: "160px",
+              }}
+            >
+              <Link
+                className="dropdown-item"
+                to="https://knotx.github.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeDropdown}
+              >
+                Knot.x
+              </Link>
+              <Link
+                className="dropdown-item"
+                to="https://github.com/wttech/aet"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeDropdown}
+              >
+                AET
+              </Link>
+              {/* Add more projects as needed */}
+            </div>
+          )}
+        </div>
         <Link className="header-link-contact" to="mailto:contact@handsonarchitects.com">
           Contact us
         </Link>
@@ -26,6 +80,54 @@ const Layout = ({ location, title, children }) => {
         <Link className="header-link-home" to="/">
           Home
         </Link>
+        <div
+          className="header-link-dropdown"
+          onMouseEnter={handleDropdown}
+          onMouseLeave={closeDropdown}
+          style={{ display: "inline-block", position: "relative" }}
+        >
+          <button
+            className="header-link-projects"
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+            aria-haspopup="true"
+            aria-expanded={showDropdown}
+          >
+            Open-source ▼
+          </button>
+          {showDropdown && (
+            <div
+              className="dropdown-menu"
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                background: "#fff",
+                border: "1px solid #ccc",
+                zIndex: 1000,
+                minWidth: "160px",
+              }}
+            >
+              <Link
+                className="dropdown-item"
+                to="https://knotx.github.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeDropdown}
+              >
+                Knot.x
+              </Link>
+              <Link
+                className="dropdown-item"
+                to="https://github.com/wttech/aet"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeDropdown}
+              >
+                AET
+              </Link>
+            </div>
+          )}
+        </div>
         <Link className="header-link-contact" to="mailto:contact@handsonarchitects.com">
           Contact us
         </Link>
