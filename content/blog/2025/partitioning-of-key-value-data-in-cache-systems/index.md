@@ -7,7 +7,7 @@ featuredImage: ./cache-hero-image.png
 
 ![Cache hero image](./cache-hero-image.png)
 
-This is the first post in a blog series exploring cache partitioning strategies for distributed systems. It covers how to handle large data volumes and high traffic efficiently by dividing cache responsibilities across nodes. The post highlights why partitioning matters, compares it with replication, and explains core techniques like consistent hashing for load balancing. In upcoming articles ([Part 2](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-2/), Part 3), we’ll look at how to decouple the caching proxy from application logic and conclude with a hands-on example of using the sidecar pattern with Twemproxy.
+This is the first post in a blog series exploring cache partitioning strategies for distributed systems. It covers how to handle large data volumes and high traffic efficiently by dividing cache responsibilities across nodes. The post highlights why partitioning matters, compares it with replication, and explains core techniques like consistent hashing for load balancing. In upcoming articles ([Part 2](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-2/), [Part 3](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-3/)), we’ll look at how to decouple the caching proxy from application logic and conclude with a hands-on example of using the sidecar pattern with Twemproxy.
 
 ## When to use cache partitioning
 
@@ -47,6 +47,6 @@ This abstraction can be achieved using a client library that supports consistent
 
 In the next two articles of this series, we’ll dive deeper into designing a scalable caching layer in distributed systems.
 
-The second article ([Part 2](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-2/))will trace the evolution of caching implementations—from a basic in-app caching library, to an externalized sidecar (ambassador) container, and finally to a dedicated proxy layer. This progression highlights how decoupling caching concerns improves scalability, flexibility, and maintainability.
+The second article ([Part 2](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-2/)) will trace the evolution of caching implementations—from a basic in-app caching library, to an externalized sidecar (ambassador) container, and finally to a dedicated proxy layer. This progression highlights how decoupling caching concerns improves scalability, flexibility, and maintainability.
 
-The final article (Part 3) will present a hands-on example using Twemproxy (Nutcracker) as a sidecar caching proxy. We’ll show how to deploy it within a Kubernetes environment alongside your application and configure it with Memcached and Ketama hashing to enable consistent, efficient cache partitioning.
+The final article ([Part 3](https://handsonarchitects.com/blog/2025/partitioning-of-key-value-data-in-cache-systems-part-3/)) will present a hands-on example using Twemproxy (Nutcracker) as a sidecar caching proxy. We’ll show how to deploy it within a Kubernetes environment alongside your application and configure it with Memcached and Ketama hashing to enable consistent, efficient cache partitioning.
