@@ -70,3 +70,14 @@ yarn-error.log
 
 .vscode
 .idea
+
+# Project files
+drafts/
+logs/
+notes/
+.prompts
+.serena
+.mcp.json
+.claude
+docs/
+CLAUDE.md
