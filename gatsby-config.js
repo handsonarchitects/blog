@@ -65,6 +65,7 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
+          `gatsby-remark-mermaid`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-reading-time`,
         ],
