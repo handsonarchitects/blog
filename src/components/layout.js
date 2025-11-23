@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const Layout = ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
@@ -69,9 +70,20 @@ const Layout = ({ location, title, children }) => {
         <Link className="header-link-contact" to="mailto:contact@handsonarchitects.com">
           Contact us
         </Link>
-        <h1 className="main-heading">
-          <Link to="/">{title}</Link>
-        </h1>
+        <div className="header-title-container">
+          <StaticImage
+            className="header-logo"
+            src="../images/logo-small.webp"
+            alt="HandsOnArchitects Logo"
+            layout="fixed"
+            width={90}
+            height={90}
+            formats={["auto", "webp", "avif"]}
+          />
+          <h1 className="main-heading">
+            <Link to="/">{title}</Link>
+          </h1>
+        </div>
       </>
     )
   } else {

@@ -252,6 +252,16 @@ a:focus {
   margin-bottom: var(--spacing-12);
 }
 
+.header-title-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.header-logo {
+  flex-shrink: 0;
+}
+
 .main-heading {
   font-size: var(--fontSize-7);
   margin: 0;
@@ -401,5 +411,11 @@ code[class*="language-markdown"] {
   ul,
   ol {
     list-style-position: inside;
+  }
+  .header-title-container {
+    gap: var(--spacing-3);
+  }
+  .main-heading {
+    font-size: var(--fontSize-5);
   }
 }
