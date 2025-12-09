@@ -1,6 +1,6 @@
 ---
-title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications (Part 2)"
-date: "2025-11-21"
+title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications (Part 2) - Strategy"
+date: "2025-12-10"
 description: "Learn practical strategies to prevent Denial of Wallet attacks in GenAI apps. Compare rate limiting algorithms and implement cost-aware protection with actionable checklists."
 featuredImage: ./denial-of-wallet-2-hero.png
 tags:
@@ -31,47 +31,54 @@ Let's compare four rate limiting algorithms in the context of cost-aware rate li
 
 When evaluating these algorithms, remember that we're throttling cost consumption rather than just request counts. A request that triggers a complex agentic workflow with multiple LLM calls should consume more of the user's quota than a simple cached lookup. The algorithm you choose must support this cost-based accounting while still providing good user experience and operational characteristics.
 
-> Note
-> Most LLM API providers charge based on tokens processed (input + output). The "cost" (in tokens) of each request is part of the LLM API response metadata, and we can use this to implement cost-aware rate limiting. For example, OpenAI's API returns `usage` data with `prompt_tokens`, `completion_tokens`, and `total_tokens` fields that we can convert to dollar costs based on model pricing. For simplicity, we refer to "cost" in dollars throughout this post. You can understand this as token usage multiplied by model pricing.
+> Note: Terminology
+> To avoid confusion, we use the following terms consistently throughout this post:
+> - **Budget units** (or **credits**): The quota tracked by the rate limiter. For simplicity, we use a 1-to-1 mapping where 1 budget unit = $0.001 (one-tenth of a cent). A $0.50 request consumes 500 budget units.
+> - **Model tokens**: The actual tokens processed by the LLM (input tokens + output tokens), as reported by the LLM API. For example, OpenAI's API returns `prompt_tokens`, `completion_tokens`, and `total_tokens` in the `usage` metadata.
+> - **Cost (USD)**: The dollar amount charged by the LLM provider, calculated from model tokens using per-model pricing (e.g., $0.15 per 1M input tokens for GPT-4o).
+>
+> The conversion flow is: **model tokens** → **cost (USD)** via pricing catalog → **budget units** via the 1:0.001 ratio. When we say "a request consumes 500 budget units," we mean it costs $0.50 in USD, regardless of how many model tokens were used.
 
 ### Token Bucket Algorithm
 
-The Token Bucket algorithm maintains a bucket with a maximum capacity of tokens (here we mean cost-based tokens, not LLM tokens) that refill at a constant rate. Incoming requests consume tokens from the bucket based on their cost, and requests are rejected when insufficient tokens are available (read more here: [Eraser.io](https://www.eraser.io/decision-node/api-rate-limiting-strategies-token-bucket-vs-leaky-bucket), [GeeksforGeeks](https://www.geeksforgeeks.org/system-design/rate-limiting-algorithms-system-design/)). This approach allows variable processing rates and can accommodate short-term traffic bursts (which could be triggered without user's knowledge/intention in agent workflows) while maintaining long-term rate limits.
+The Token Bucket algorithm maintains a bucket with a maximum capacity of budget units that refill at a constant rate. Incoming requests consume budget units from the bucket based on their cost (USD), and requests are rejected when insufficient budget units are available. This approach allows variable processing rates and can accommodate short-term traffic bursts (which could be triggered without user's knowledge/intention in agent workflows) while maintaining long-term rate limits.
 
-In a cost-aware context, each request consumes tokens proportional to its cost. A $0.001 request consumes 1 token, while a $0.50 request consumes 500 tokens. The bucket refills at a steady rate (e.g., 1000 tokens per hour = approximately $1/hour budget).
+In a cost-aware context, each request consumes budget units proportional to its cost. A $0.001 request consumes 1 budget unit, while a $0.50 request consumes 500 budget units. The bucket refills at a steady rate (e.g., 1000 budget units per hour = approximately $1/hour budget).
 
-**Note on LLM token consumption**: For GenAI applications, you may need dual limiting: request-based (requests per second) and LLM token-based (tokens per second consumed by the model, not bucket tokens). Since exact LLM token counts are often only known post-response, consider pre-request estimation based on prompt length plus hard caps via `max_tokens` parameter to prevent unbounded generation costs. One technique used in practice is to calculate the LLM input token cost upfront (based on input), then estimate LLM output tokens at the beginning using the `max_tokens` parameter (provisional reservation), but adjust the count at the end to reflect actual output tokens used (correction). In practice:
+**Note on model token consumption**: For GenAI applications, you may need dual limiting: request-based (requests per second) and model token-based (model tokens per second consumed by the LLM). Since exact model token counts are often only known post-response, consider pre-request estimation based on prompt length plus hard caps via `max_tokens` parameter to prevent unbounded generation costs. One technique used in practice is to calculate the cost upfront based on input model tokens, then estimate output model tokens using the `max_tokens` parameter (provisional reservation), and adjust at the end to reflect actual output model tokens used (correction). In practice:
 - Provisional reservation + correction:
-   - at request start, reserve the estimated cost = cost(input tokens) + cost(`max_tokens` output estimate) - this ensures you don't exceed the budget upfront;
-   - once the response completes, replace the estimate with the actual `completion_tokens` and refund any unused portion - this ensures accurate accounting.
-- Per-model pricing: different models have distinct input vs output token prices. Maintain a pricing catalog keyed by model and use model-specific rates when converting tokens to dollar costs. See also provider docs on rate limits and model-specific quotas, e.g., [Anthropic rate limits](https://platform.claude.com/docs/en/api/rate-limits).
-- Formula: `reserve_cost_start = cost(input_tokens) + cost(max_tokens_estimate)`; `final_cost = cost(input_tokens) + cost(actual_output_tokens)`. Apply the delta to refund or charge the difference.
-- Example:
+   - at request start, calculate `estimated_cost_usd = cost_usd(input_model_tokens) + cost_usd(max_tokens_estimate)`, then convert to budget units: `reserve_budget_units = estimated_cost_usd / 0.001` - this ensures you don't exceed the budget upfront;
+   - once the response completes, calculate `actual_cost_usd = cost_usd(input_model_tokens) + cost_usd(actual_output_model_tokens)`, convert to `actual_budget_units = actual_cost_usd / 0.001`, and refund `reserve_budget_units - actual_budget_units` - this ensures accurate accounting.
+- Per-model pricing: different models have distinct input vs output token prices. Maintain a pricing catalog keyed by model and use model-specific rates when converting model tokens to cost (USD). See also provider docs on rate limits and model-specific quotas, e.g., [Anthropic rate limits](https://platform.claude.com/docs/en/api/rate-limits).
+- Formula: `reserve_budget_units = (cost_usd(input_model_tokens) + cost_usd(max_tokens_estimate)) / 0.001`; `actual_budget_units = (cost_usd(input_model_tokens) + cost_usd(actual_output_model_tokens)) / 0.001`. Apply the delta to refund the difference.
+- Example (assuming GPT-4o pricing: $2.50/1M input tokens, $10.00/1M output tokens):
 ```
 estimate:
-- input: 800
+- input_model_tokens: 800
 - max_tokens: 300
-- reserve_cost_start = 800 + 300 = 1100 tokens
+- estimated_cost_usd = (800 * 2.50/1M) + (300 * 10.00/1M) = $0.002 + $0.003 = $0.005
+- reserve_budget_units = 0.005 / 0.001 = 5 budget units
 
 model returns:
-- actual_output_tokens = 120
-- final_cost = 800 + 120 = 920 tokens
-- refund = 1100 - 920 = 180 tokens
+- actual_output_model_tokens: 120
+- actual_cost_usd = (800 * 2.50/1M) + (120 * 10.00/1M) = $0.002 + $0.0012 = $0.0032
+- actual_budget_units = 0.0032 / 0.001 = 3.2 budget units
+- refund = 5 - 3.2 = 1.8 budget units
 ```
 
 **Pros**:
 - Provides granular control over cost consumption with configurable maximum capacity (budget ceiling) and refill rate (budget replenishment rate)
-- Allows legitimate burst traffic to be processed immediately when tokens are available, improving user experience during occasional high-cost operations
+- Allows legitimate burst traffic to be processed immediately when budget units are available, improving user experience during occasional high-cost operations
 - Offers flexibility to adapt to varying traffic patterns and dynamic workload requirements without rejecting expensive requests unnecessarily
 - Simple conceptual model that is relatively straightforward to implement and understand, making it easier to explain to stakeholders
 - Well-suited for scenarios where users occasionally need to exceed steady-state spending limits (e.g., triggering agentic workflow that requires multiple LLM calls)
 
 **Cons**:
 - Requires careful tuning of bucket capacity and refill rate to prevent DoW attack vectors while still allowing legitimate usage patterns. If done poorly:
-  - Can be exploited by greedy users who consume all available tokens during bursts, potentially causing cost spikes if bucket capacity is set too high
-  - May lead to unpredictable monthly cost patterns in Generative AI contexts where accumulated tokens enable sudden resource consumption
-  - Does not provide strict cost guarantees as accumulated tokens enable users to spend their entire daily budget in minutes if they've been idle
-- Requires additional computational overhead for token generation and bucket management operations, though this is typically negligible compared to AI inference costs
+  - Can be exploited by greedy users who consume all available budget units during bursts, potentially causing cost spikes if bucket capacity is set too high
+  - May lead to unpredictable monthly cost patterns in Generative AI contexts where accumulated budget units enable sudden resource consumption
+  - Does not provide strict cost guarantees as accumulated budget units enable users to spend their entire daily budget in minutes if they've been idle
+- Requires additional computational overhead for budget unit generation and bucket management operations, though this is typically negligible compared to AI inference costs
 
 **When to use**: Token Bucket works well when your users have legitimate use cases for occasional bursts above their steady-state rate (know your agentic workflow!). For example, a user might invoke multiple agentic workflows by sending complex, multi-step requests. The burst tolerance makes the system feel responsive rather than artificially constraining legitimate workflows.
 
@@ -85,8 +92,8 @@ In cost-aware implementations, the "leak rate" represents the steady cost budget
 - Ensures constant, predictable cost consumption rate that directly translates to predictable monthly bills for AI applications
 - Smooths out bursty traffic patterns by enforcing steady processing, preventing sudden cost spikes that trigger finance alerts
 - Provides straightforward behavior that is easier to maintain and debug compared to more complex algorithms
-- Helps mitigate both Denial of Service and Denial of Wallet attacks through strict rate enforcement at the cost dimension (assuming we can estimate LLM output tokens reliably)
-- Ensures fair resource distribution among users by processing requests in FIFO order, preventing any single user from dominating budget
+- Helps mitigate both Denial of Service and Denial of Wallet attacks through strict rate enforcement at the cost dimension (assuming we can estimate LLM output model tokens reliably)
+- Ensures fair resource distribution when implemented with per-user (or per-tenant) queues; each queue processes requests in FIFO order, preventing any single user from dominating the shared budget. Note: a single global queue can cause head-of-line blocking where one noisy user starves others
 - Excellent for aligning technical cost controls with financial planning cycles (e.g., $X per hour leak rate = $24X per day budget)
 
 **Cons**:
@@ -124,7 +131,7 @@ In a cost-aware implementation, each window has a cost budget (e.g., $10 per hou
 
 ### Sliding Window Algorithm
 
-The Sliding Window algorithm maintains a continuously moving time window and tracks requests within that rolling interval, providing more accurate rate limiting than fixed windows ([GeeksforGeeks](https://www.geeksforgeeks.org/system-design/rate-limiting-algorithms-system-design/), [RD Blog](https://rdiachenko.com/posts/arch/rate-limiting/sliding-window-algorithm/)). The classic implementation (Sliding Window Log) tracks individual request timestamps and costs. The memory-optimized variant (Sliding Window Counter) uses weighted counts from fixed windows to reduce memory overhead while approximating the sliding behavior.
+The Sliding Window algorithm maintains a continuously moving time window and tracks requests within that rolling interval, providing more accurate rate limiting than fixed windows. The classic implementation (Sliding Window Log) tracks individual request timestamps and costs. The memory-optimized variant (Sliding Window Counter) uses weighted counts from fixed windows to reduce memory overhead while approximating the sliding behavior.
 
 In cost-aware implementations, the sliding window tracks total cost consumed within the rolling time period. Each request's cost is recorded with its timestamp. As time advances, costs outside the window are discarded.
 
@@ -139,7 +146,7 @@ In cost-aware implementations, the sliding window tracks total cost consumed wit
 **Cons**:
 - Significantly more complex to implement, debug, and maintain compared to simpler algorithms, increasing development time
 - **Sliding Window Log** requires substantial memory (O(requests in window) per user) and CPU for timestamp management at scale
-- **Sliding Window Counter** uses approximation that allows small residual boundary bursts (typically <10% of window limit)
+- **Sliding Window Counter** uses approximation that allows small residual boundary bursts (often single-digit percent in practice, depending on window size and weighting scheme)
 - Scalability challenges in distributed systems requiring synchronization across multiple nodes to maintain consistency
 - Requires more sophisticated infrastructure and state management for production deployment (e.g., sorted sets in Redis for Log variant, atomic counters for Counter variant)
 
@@ -182,9 +189,8 @@ Start tracking cost metrics from day one. Even if you don't have production traf
 **Action items**:
 - Instrument your application to track cost per request. Tag each LLM API call, vector search operation, and expensive computation with its cost.
 - Export cost metrics to your observability platform (Prometheus, Datadog, CloudWatch, etc.). Create time-series metrics for:
-  - `request_cost_dollars` (gauge): Cost of individual requests
-  - `user_hourly_spend_dollars` (gauge): Rolling hourly spend per user
-  - `total_daily_spend_dollars` (counter): Total daily spend across all users
+  - `request_cost_usd` (histogram): Distribution of request costs, enabling p50/p95/p99 analysis and anomaly detection
+  - `total_spend_usd` (counter with labels for user/tenant): Monotonically increasing total spend; derive hourly/daily rates via recording rules or range queries
   - `expensive_operation_count` (counter): Count of operations exceeding threshold (e.g., >$0.10)
 
 **Why this matters**: Without observability, you're flying blind. You won't know if your rate limiter is working. You won't know which users to exempt from strict limits. You won't know when to adjust thresholds. Invest in observability before you invest in controls.
@@ -223,7 +229,7 @@ Once you have cost observability running, invest in exploratory analysis. Query 
 
 **Action items**:
 - Sort users by total spend. Identify the top 10% of spenders. Are they legitimate power users or potential DoW attackers?
-- Analyze their request patterns:
+- Analyze their request patterns: burst size and frequency, time-of-day and day-of-week effects, model mix (which models are used most), tool-call frequency and patterns, cache hit rates, per-session vs per-user behavior trends
 - For each high-cost pattern, ask: Could this be optimized?
   - Can we add caching to reduce redundant LLM calls?
   - Can we batch requests to improve efficiency?
