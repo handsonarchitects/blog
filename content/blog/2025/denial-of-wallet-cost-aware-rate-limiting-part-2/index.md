@@ -1,5 +1,5 @@
 ---
-title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications (Part 2) - Strategy"
+title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications - Strategy (Part 2)"
 date: "2025-12-10"
 description: "Learn practical strategies to prevent Denial of Wallet attacks in GenAI apps. Compare rate limiting algorithms and implement cost-aware protection with actionable checklists."
 featuredImage: ./denial-of-wallet-2-hero.png

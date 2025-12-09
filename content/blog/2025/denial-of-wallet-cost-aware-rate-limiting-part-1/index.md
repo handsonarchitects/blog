@@ -1,5 +1,5 @@
 ---
-title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications (Part 1)"
+title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications - Introduction (Part 1)"
 date: "2025-11-21"
 description: "Prevent Denial of Wallet with cost-aware rate limiting. Learn how heterogeneous request costs shape design, trade-offs, and when to build custom limits."
 featuredImage: ./denial-of-wallet-hero.png
