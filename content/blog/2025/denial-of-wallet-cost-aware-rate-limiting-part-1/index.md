@@ -1,5 +1,5 @@
 ---
-title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications (Part 1)"
+title: "Denial of Wallet: Cost-Aware Rate Limiting for Generative AI Applications - Introduction (Part 1)"
 date: "2025-11-21"
 description: "Prevent Denial of Wallet with cost-aware rate limiting. Learn how heterogeneous request costs shape design, trade-offs, and when to build custom limits."
 featuredImage: ./denial-of-wallet-hero.png
@@ -7,7 +7,7 @@ featuredImage: ./denial-of-wallet-hero.png
 
 ![Architects find out the hard way about denial of wallet](denial-of-wallet-hero.png)
 
-> This post introduces a series about **Denial of Wallet** (DoW) as a distinct failure mode from Denial of Service (DoS). In the first part, we'll explore how to reason about cost-aware rate limiting across CDN, gateway, and application layers. After that, you'll learn when to invest in custom limits, the second part will focus on user-aware limits and how to frame cost units and design strategies. Finally, part 3 of this series will provide a hands-on implementation.
+> This post introduces a series about **Denial of Wallet** (DoW) as a distinct failure mode from Denial of Service (DoS). In the first part, we'll explore how to reason about cost-aware rate limiting across CDN, gateway, and application layers. After that, you'll learn when to invest in custom limits, [the second part](/blog/2025/denial-of-wallet-cost-aware-rate-limiting-part-2/) focuses on user-aware limits and how to frame cost units and design strategies. Finally, part 3 of this series will provide a hands-on implementation.
 
 ## Introduction — The Cost Trap in AI-Era Systems
 
@@ -117,7 +117,7 @@ The attack pattern:
 In both cases, a cost-aware rate limiter would have:
 
 1. **Pre-execution check**: Before invoking the costly LLM, estimate the request cost based on workflow type or any other heuristics
-2. **Budget check**: Query the user's budget (more on this in the next part) to see how much spend remains
+2. **Budget check**: Query the user's budget (more on this in the [next part](/blog/2025/denial-of-wallet-cost-aware-rate-limiting-part-2/)) to see how much spend remains
 3. **Enforcement decision**: Decide to allow or reject based on remaining budget, not just RPS
 4. **Graceful rejection**: Return `429 Too Many Requests` with headers:
    ```
